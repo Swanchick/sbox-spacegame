@@ -1,0 +1,188 @@
+{
+  "Id": "9f832399-4887-46b0-8f21-2ee284f538e2",
+  "GameObjects": [
+    {
+      "Id": "a74a7249-281f-40da-be8a-afab0030ae05",
+      "Name": "NetworkHelper",
+      "Scale": "0.5632889,0.5632889,0.5632889",
+      "Components": [
+        {
+          "__type": "NetworkHelper",
+          "PlayerPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/player.prefab"
+          },
+          "SpawnPoints": [
+            {
+              "_type": "gameobject",
+              "go": "21fa2e66-3199-42b8-871b-5330a2a32e71"
+            },
+            {
+              "_type": "gameobject",
+              "go": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6"
+            }
+          ],
+          "StartServer": true
+        }
+      ]
+    },
+    {
+      "Id": "bfc59c12-1ed2-4f91-8956-a95a315eac3c",
+      "Name": "Sun",
+      "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+      "Tags": "light_directional,light",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "DirectionalLight",
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.94419,0.97767,1,1",
+          "Shadows": true,
+          "SkyColor": "0.2532,0.32006,0.35349,1"
+        }
+      ]
+    },
+    {
+      "Id": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
+      "Name": "2D Skybox",
+      "Tags": "skybox",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "SkyBox2D",
+          "SkyMaterial": "materials/skybox/light_test_sky_sunny03.vmat",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "EnvmapProbe",
+          "Bounds": {
+            "Mins": "-512,-512,-512",
+            "Maxs": "512,512,512"
+          },
+          "Feathering": 0.02,
+          "Projection": "Sphere",
+          "Texture": "textures/cubemaps/default2.vtex",
+          "TintColor": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "Id": "6ad70641-3c6c-4402-9c85-9a4969af4764",
+      "Name": "Plane",
+      "Scale": "5,5,5",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/default.vmat",
+          "Model": "models/dev/plane.vmdl",
+          "RenderType": "On",
+          "Tint": "0.39546,0.51163,0.27128,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,-5",
+          "IsTrigger": false,
+          "Scale": "100,100,10",
+          "Static": false,
+          "Surface": null
+        }
+      ]
+    },
+    {
+      "Id": "21fa2e66-3199-42b8-871b-5330a2a32e71",
+      "Name": "SpawnPoint",
+      "Position": "140.2515,0,0",
+      "Scale": "0.5632889,0.5632889,0.5632889",
+      "Enabled": true
+    },
+    {
+      "Id": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6",
+      "Name": "SpawnPoint (1)",
+      "Position": "-147.5363,0,0",
+      "Scale": "0.5632889,0.5632889,0.5632889",
+      "Enabled": true
+    },
+    {
+      "Id": "f5313283-2e9d-4d78-9e84-e4a007686beb",
+      "Name": "SpaceBody",
+      "Position": "700,6,12",
+      "Scale": "2.014622,2.014622,2.014622",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/sphere.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "SpaceBody",
+          "testArrow": {
+            "_type": "gameobject",
+            "go": "5a03f714-cae0-49df-8fb1-94a18e27df9e"
+          }
+        }
+      ]
+    },
+    {
+      "Id": "5a03f714-cae0-49df-8fb1-94a18e27df9e",
+      "Name": "Arrow2",
+      "Position": "700,6,83",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "SkinnedModelRenderer",
+          "AnimationGraph": null,
+          "BodyGroups": 341,
+          "BoneMergeTarget": null,
+          "CreateBoneObjects": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/citizen/citizen.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "Id": "be7b3545-b3d5-43af-99a7-301deb966d7f",
+      "Name": "player",
+      "Position": "83.78099,-15.97121,0.326683",
+      "Tags": "player",
+      "Enabled": true,
+      "__Prefab": "prefabs/player.prefab"
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "Lerping": true,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 60,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "Title": "minimal",
+  "Description": "",
+  "LastSaved": "2024-02-20T08:55:37.2302361\u002B02:00",
+  "__references": []
+}
