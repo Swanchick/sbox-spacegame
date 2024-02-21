@@ -7,13 +7,17 @@ public sealed class Player : Component
 	[Property] public float groundFriction => 9f;
 	[Property] public float cameraSensetivity => 0.1f;
 
+	[Property] public float airFriction => 0.1f;
+
 	[Property] public CameraComponent playerCamera;
 	[Property] public GameObject playerHead;
 	[Property] public GameObject playerBody;
 
+	
+
 	private SpaceBody spaceBody;
 
-	private Vector3 gravityDirection;
+	private Vector3 gravityVelocity;
 
 	private CharacterController playerController { get; set; }
 	private CitizenAnimationHelper animationHelper { get; set; }
@@ -36,13 +40,8 @@ public sealed class Player : Component
 		}
 
 		playerCamera.GameObject.SetParent( playerHead, false );
-	}
 
-	private void FindSpaceBody()
-	{
-		spaceBody = Scene.GetAllComponents<SpaceBody>().FirstOrDefault();
-
-		Log.Info( spaceBody );
+		gravityVelocity = Scene.PhysicsWorld.Gravity;
 	}
 
 	protected override void OnUpdate()
@@ -63,8 +62,6 @@ public sealed class Player : Component
 		if ( IsProxy ) return;
 		
 		Move();
-
-		playerController.Move();
 	}
 
 	private Vector3 BuildDirection()
@@ -81,15 +78,23 @@ public sealed class Player : Component
 
 	private void Move()
 	{
-		wishDir = BuildDirection();
+		Vector3 finalVelocity = BuildDirection();
 
-		playerController.Accelerate( wishDir );
-		playerController.ApplyFriction( groundFriction );
-	}
+		if ( playerController.IsOnGround )
+		{
+			playerController.ApplyFriction( groundFriction );
+		}
+		else
+		{
+			finalVelocity *= airFriction;
 
-	private void Fall()
-	{
-		
+			playerController.Velocity += gravityVelocity * Time.Delta ;
+		}
+
+		wishDir = finalVelocity;
+
+		playerController.Accelerate( finalVelocity );
+		playerController.Move();
 	}
 
 	private void CameraRotation()
@@ -114,7 +119,7 @@ public sealed class Player : Component
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
 		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
-		animationHelper.IsGrounded = IsOnSpaceBodyGround();
+		animationHelper.IsGrounded = playerController.IsOnGround;
 	}
 
 	private void RotateBody()
