@@ -68,37 +68,23 @@
     {
       "Id": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6",
       "Name": "SpawnPoint (1)",
-      "Position": "-2601.159,0,0",
       "Scale": "0.5632889,0.5632889,0.5632889",
       "Enabled": true
     },
     {
-      "Id": "65f21b3c-db57-4168-8ee8-2723a33ee18e",
-      "Name": "SpaceBody",
-      "Scale": "50,50,50",
+      "Id": "4fd6256c-9e8b-4326-9304-b9b1f2d1d42d",
+      "Name": "Object",
       "Enabled": true,
       "Components": [
         {
-          "__type": "ModelRenderer",
-          "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": "materials/dev/simple/simple_blend.vmat",
-          "Model": "models/dev/sphere.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "SphereCollider",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Radius": 31.6,
-          "Static": false,
-          "Surface": null
-        },
-        {
-          "__type": "SpaceBody"
+          "__type": "MapInstance",
+          "MapName": "spacegame_arena",
+          "OnMapLoaded": null,
+          "OnMapUnloaded": null,
+          "UseMapFromLaunch": false
         }
-      ]
+      ],
+      "Children": []
     }
   ],
   "SceneProperties": {
@@ -124,6 +110,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-20T23:33:08.1181653\u002B02:00",
+  "LastSaved": "2024-02-21T09:10:21.8315633\u002B02:00",
   "__references": []
 }

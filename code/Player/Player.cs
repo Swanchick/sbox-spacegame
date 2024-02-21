@@ -1,6 +1,5 @@
 using Sandbox;
 using Sandbox.Citizen;
-using System.Numerics;
 
 public sealed class Player : Component
 {
@@ -14,13 +13,10 @@ public sealed class Player : Component
 
 	private SpaceBody spaceBody;
 
+	private Vector3 gravityDirection;
+
 	private CharacterController playerController { get; set; }
 	private CitizenAnimationHelper animationHelper { get; set; }
-
-	private float gravityAcceleration;
-	private Vector3 gravityVelocity = Vector3.Zero;
-
-	private Vector3 currentNormal = Vector3.Zero;
 
 
 	[Sync] public Vector3 wishDir { get; set; }
@@ -36,13 +32,10 @@ public sealed class Player : Component
 		if ( IsProxy )
 		{
 			playerCamera.GameObject.Destroy();
-			
 			return;
 		}
 
 		playerCamera.GameObject.SetParent( playerHead, false );
-
-		FindSpaceBody();
 	}
 
 	private void FindSpaceBody()
@@ -70,8 +63,6 @@ public sealed class Player : Component
 		if ( IsProxy ) return;
 		
 		Move();
-		InteractWithSpaceBody();
-		Fall();
 
 		playerController.Move();
 	}
@@ -96,53 +87,9 @@ public sealed class Player : Component
 		playerController.ApplyFriction( groundFriction );
 	}
 
-	private void InteractWithSpaceBody()
-	{
-		if ( spaceBody == null ) return;
-
-		SceneTraceResult trace = Scene.Trace
-			.Ray(Transform.Position, spaceBody.Transform.Position)
-			.Run();
-
-		Vector3 dir = trace.Normal;
-		Angles angles = Rotation.LookAt( dir ).Angles();
-		angles.pitch -= 90f;
-		Rotation playerRotation = Transform.Rotation;
-
-		Transform.Rotation = Rotation.Lerp( playerRotation, angles.ToRotation(), Time.Delta * 10f); // ToDo: Make speed for rotation
-	}
-
-	private bool IsOnSpaceBodyGround()
-	{
-		SceneTraceResult trace = Scene.Trace
-			.Ray( Transform.Position + Transform.Rotation.Up * 10f, Transform.Position + Transform.Rotation.Down * 30f )
-			.Run();
-
-		return trace.Hit;
-	}
-
 	private void Fall()
 	{
-		if ( spaceBody == null ) return;
-
-		Vector3 dirToFall = SVector3.FindDirectionOfVectors( Transform.Position, spaceBody.Transform.Position );
-
-		Gizmo.Draw.Arrow( Transform.Position + Transform.Rotation.Up * 10f, Transform.Position + Transform.Rotation.Down * 40f );
-
-		Log.Info( playerController.IsOnGround || IsOnSpaceBodyGround() );
-
-		if ( playerController.IsOnGround )
-		{
-			dirToFall = Vector3.Zero;
-		}
-		else
-		{
-			dirToFall *= Time.Delta * 5000f;
-		}
-
 		
-
-		playerController.Velocity += dirToFall;
 	}
 
 	private void CameraRotation()
