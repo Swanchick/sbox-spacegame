@@ -19,6 +19,6 @@ public sealed class SVector3
 	{
 		Vector3 result = b - a;
 
-		return result;
+		return result.Normal;
 	}
 }

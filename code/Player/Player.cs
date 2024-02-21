@@ -1,5 +1,6 @@
 using Sandbox;
 using Sandbox.Citizen;
+using System.Numerics;
 
 public sealed class Player : Component
 {
@@ -11,11 +12,16 @@ public sealed class Player : Component
 	[Property] public GameObject playerHead;
 	[Property] public GameObject playerBody;
 
+	private SpaceBody spaceBody;
+
 	private CharacterController playerController { get; set; }
 	private CitizenAnimationHelper animationHelper { get; set; }
 
 	private float gravityAcceleration;
-	private Vector3 gravityDirection = Vector3.Down;
+	private Vector3 gravityVelocity = Vector3.Zero;
+
+	private Vector3 currentNormal = Vector3.Zero;
+
 
 	[Sync] public Vector3 wishDir { get; set; }
 	[Sync] public Angles headAngles { get; set; }	
@@ -35,6 +41,15 @@ public sealed class Player : Component
 		}
 
 		playerCamera.GameObject.SetParent( playerHead, false );
+
+		FindSpaceBody();
+	}
+
+	private void FindSpaceBody()
+	{
+		spaceBody = Scene.GetAllComponents<SpaceBody>().FirstOrDefault();
+
+		Log.Info( spaceBody );
 	}
 
 	protected override void OnUpdate()
@@ -55,7 +70,10 @@ public sealed class Player : Component
 		if ( IsProxy ) return;
 		
 		Move();
+		InteractWithSpaceBody();
 		Fall();
+
+		playerController.Move();
 	}
 
 	private Vector3 BuildDirection()
@@ -76,12 +94,55 @@ public sealed class Player : Component
 
 		playerController.Accelerate( wishDir );
 		playerController.ApplyFriction( groundFriction );
-		playerController.Move();
+	}
+
+	private void InteractWithSpaceBody()
+	{
+		if ( spaceBody == null ) return;
+
+		SceneTraceResult trace = Scene.Trace
+			.Ray(Transform.Position, spaceBody.Transform.Position)
+			.Run();
+
+		Vector3 dir = trace.Normal;
+		Angles angles = Rotation.LookAt( dir ).Angles();
+		angles.pitch -= 90f;
+		Rotation playerRotation = Transform.Rotation;
+
+		Transform.Rotation = Rotation.Lerp( playerRotation, angles.ToRotation(), Time.Delta * 10f); // ToDo: Make speed for rotation
+	}
+
+	private bool IsOnSpaceBodyGround()
+	{
+		SceneTraceResult trace = Scene.Trace
+			.Ray( Transform.Position + Transform.Rotation.Up * 10f, Transform.Position + Transform.Rotation.Down * 30f )
+			.Run();
+
+		return trace.Hit;
 	}
 
 	private void Fall()
 	{
+		if ( spaceBody == null ) return;
 
+		Vector3 dirToFall = SVector3.FindDirectionOfVectors( Transform.Position, spaceBody.Transform.Position );
+
+		Gizmo.Draw.Arrow( Transform.Position + Transform.Rotation.Up * 10f, Transform.Position + Transform.Rotation.Down * 40f );
+
+		Log.Info( playerController.IsOnGround || IsOnSpaceBodyGround() );
+
+		if ( playerController.IsOnGround )
+		{
+			dirToFall = Vector3.Zero;
+		}
+		else
+		{
+			dirToFall *= Time.Delta * 5000f;
+		}
+
+		
+
+		playerController.Velocity += dirToFall;
 	}
 
 	private void CameraRotation()
@@ -91,14 +152,13 @@ public sealed class Player : Component
 		Vector2 mouseDealta = Input.MouseDelta;
 
 		_headAngles.yaw -= mouseDealta.x * cameraSensetivity;
-		playerHead.Transform.Rotation = _headAngles.ToRotation();
+		playerHead.Transform.LocalRotation = _headAngles.ToRotation();
 
 		headAngles = _headAngles;
 
 		cameraAngles.pitch += mouseDealta.y * cameraSensetivity;
 		cameraAngles.pitch = cameraAngles.pitch.Clamp( -89f, 89f );
 
-		if ( IsProxy ) return;
 		playerCamera.Transform.LocalRotation = cameraAngles.ToRotation();
 	}
 
@@ -107,7 +167,7 @@ public sealed class Player : Component
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
 		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
-		animationHelper.IsGrounded = playerController.IsOnGround;
+		animationHelper.IsGrounded = IsOnSpaceBodyGround();
 	}
 
 	private void RotateBody()

@@ -5,6 +5,8 @@
       "Id": "a74a7249-281f-40da-be8a-afab0030ae05",
       "Name": "NetworkHelper",
       "Scale": "0.5632889,0.5632889,0.5632889",
+      "Networked": true,
+      "Enabled": true,
       "Components": [
         {
           "__type": "NetworkHelper",
@@ -13,10 +15,6 @@
             "prefab": "prefabs/player.prefab"
           },
           "SpawnPoints": [
-            {
-              "_type": "gameobject",
-              "go": "21fa2e66-3199-42b8-871b-5330a2a32e71"
-            },
             {
               "_type": "gameobject",
               "go": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6"
@@ -68,96 +66,39 @@
       ]
     },
     {
-      "Id": "6ad70641-3c6c-4402-9c85-9a4969af4764",
-      "Name": "Plane",
-      "Scale": "5,5,5",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "ModelRenderer",
-          "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": "materials/default.vmat",
-          "Model": "models/dev/plane.vmdl",
-          "RenderType": "On",
-          "Tint": "0.39546,0.51163,0.27128,1"
-        },
-        {
-          "__type": "BoxCollider",
-          "Center": "0,0,-5",
-          "IsTrigger": false,
-          "Scale": "100,100,10",
-          "Static": false,
-          "Surface": null
-        }
-      ]
-    },
-    {
-      "Id": "21fa2e66-3199-42b8-871b-5330a2a32e71",
-      "Name": "SpawnPoint",
-      "Position": "140.2515,0,0",
-      "Scale": "0.5632889,0.5632889,0.5632889",
-      "Enabled": true
-    },
-    {
       "Id": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6",
       "Name": "SpawnPoint (1)",
-      "Position": "-147.5363,0,0",
+      "Position": "-2601.159,0,0",
       "Scale": "0.5632889,0.5632889,0.5632889",
       "Enabled": true
     },
     {
-      "Id": "f5313283-2e9d-4d78-9e84-e4a007686beb",
+      "Id": "65f21b3c-db57-4168-8ee8-2723a33ee18e",
       "Name": "SpaceBody",
-      "Position": "700,6,12",
-      "Scale": "2.014622,2.014622,2.014622",
+      "Scale": "50,50,50",
       "Enabled": true,
       "Components": [
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
           "MaterialGroup": null,
-          "MaterialOverride": null,
+          "MaterialOverride": "materials/dev/simple/simple_blend.vmat",
           "Model": "models/dev/sphere.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
         },
         {
-          "__type": "SpaceBody",
-          "testArrow": {
-            "_type": "gameobject",
-            "go": "5a03f714-cae0-49df-8fb1-94a18e27df9e"
-          }
-        }
-      ]
-    },
-    {
-      "Id": "5a03f714-cae0-49df-8fb1-94a18e27df9e",
-      "Name": "Arrow2",
-      "Position": "700,6,83",
-      "Enabled": true,
-      "Components": [
+          "__type": "SphereCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Radius": 31.6,
+          "Static": false,
+          "Surface": null
+        },
         {
-          "__type": "SkinnedModelRenderer",
-          "AnimationGraph": null,
-          "BodyGroups": 341,
-          "BoneMergeTarget": null,
-          "CreateBoneObjects": false,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
-          "Model": "models/citizen/citizen.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
+          "__type": "SpaceBody"
         }
       ]
-    },
-    {
-      "Id": "be7b3545-b3d5-43af-99a7-301deb966d7f",
-      "Name": "player",
-      "Position": "83.78099,-15.97121,0.326683",
-      "Tags": "player",
-      "Enabled": true,
-      "__Prefab": "prefabs/player.prefab"
     }
   ],
   "SceneProperties": {
@@ -183,6 +124,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-20T08:55:37.2302361\u002B02:00",
+  "LastSaved": "2024-02-20T23:33:08.1181653\u002B02:00",
   "__references": []
 }
