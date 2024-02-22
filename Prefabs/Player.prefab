@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "9aa99f71-9bb0-4d16-93b0-8fc1a11bfbd2",
+    "Id": "a752295c-a579-4f44-9a6d-0aebd75bcc9a",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -19,17 +19,18 @@
         "__type": "Player",
         "playerBody": {
           "_type": "gameobject",
-          "go": "162a8a71-5230-4a36-83b4-14013188af26"
+          "go": "6200ced7-85f6-4f65-a6de-710456128173"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "12eb1edc-c221-4625-8db5-49517ad8534b",
+          "go": "b5aecb63-46fa-478b-8e18-1cbd0b5e17df",
           "component_type": "CameraComponent"
         },
         "playerHead": {
           "_type": "gameobject",
-          "go": "8ba6349a-4b44-4e5b-84df-af238ab9ef8f"
+          "go": "f048625e-00f3-453d-8174-60a6c71cb28d"
         },
+        "airFriction": 0.1,
         "cameraSensetivity": 0.1,
         "groundFriction": 9,
         "playerSpeed": 500
@@ -49,14 +50,14 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "162a8a71-5230-4a36-83b4-14013188af26",
+          "go": "6200ced7-85f6-4f65-a6de-710456128173",
           "component_type": "SkinnedModelRenderer"
         }
       }
     ],
     "Children": [
       {
-        "Id": "162a8a71-5230-4a36-83b4-14013188af26",
+        "Id": "6200ced7-85f6-4f65-a6de-710456128173",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [
@@ -75,13 +76,13 @@
         ]
       },
       {
-        "Id": "8ba6349a-4b44-4e5b-84df-af238ab9ef8f",
+        "Id": "f048625e-00f3-453d-8174-60a6c71cb28d",
         "Name": "PlayerHead",
         "Position": "0,0,62.78072",
         "Enabled": true,
         "Children": [
           {
-            "Id": "12eb1edc-c221-4625-8db5-49517ad8534b",
+            "Id": "b5aecb63-46fa-478b-8e18-1cbd0b5e17df",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -91,7 +92,7 @@
                 "__type": "CameraComponent",
                 "BackgroundColor": "0.33333,0.46275,0.52157,1",
                 "ClearFlags": "All",
-                "FieldOfView": 90,
+                "FieldOfView": 110,
                 "IsMainCamera": true,
                 "Orthographic": false,
                 "OrthographicHeight": 1204,

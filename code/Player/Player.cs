@@ -1,5 +1,6 @@
 using Sandbox;
 using Sandbox.Citizen;
+using System;
 
 public sealed class Player : Component
 {
@@ -12,9 +13,7 @@ public sealed class Player : Component
 	[Property] public CameraComponent playerCamera;
 	[Property] public GameObject playerHead;
 	[Property] public GameObject playerBody;
-
 	
-
 	private SpaceBody spaceBody;
 
 	private Vector3 gravityVelocity;
@@ -42,6 +41,8 @@ public sealed class Player : Component
 		playerCamera.GameObject.SetParent( playerHead, false );
 
 		gravityVelocity = Scene.PhysicsWorld.Gravity;
+
+		spaceBody = Scene.GetAllComponents<SpaceBody>().FirstOrDefault();
 	}
 
 	protected override void OnUpdate()
@@ -55,6 +56,7 @@ public sealed class Player : Component
 		if ( IsProxy ) return;
 
 		CameraRotation();
+		RotateToSpaceBody();
 	}
 
 	protected override void OnFixedUpdate()
@@ -62,6 +64,8 @@ public sealed class Player : Component
 		if ( IsProxy ) return;
 		
 		Move();
+
+		playerController.Move();
 	}
 
 	private Vector3 BuildDirection()
@@ -73,28 +77,80 @@ public sealed class Player : Component
 
 		Vector3 dir = horizontal * playerRotation.Right + vertical * playerRotation.Forward;
 
-		return dir.Normal * playerSpeed;
+		return dir.Normal;
 	}
 
 	private void Move()
 	{
-		Vector3 finalVelocity = BuildDirection();
+		Vector3 finalVelocity = BuildDirection() * playerSpeed;
 
-		if ( playerController.IsOnGround )
+		Vector3 fallDirection = -Transform.Rotation.Up;
+		Vector3 fallVelocity;
+
+		Log.Info( fallDirection );
+
+		if ( IsPlayerOnSpaceBody() || playerController.IsOnGround )
 		{
+			fallVelocity = Vector3.Zero;
 			playerController.ApplyFriction( groundFriction );
 		}
 		else
 		{
-			finalVelocity *= airFriction;
-
-			playerController.Velocity += gravityVelocity * Time.Delta ;
+			fallVelocity = fallDirection * 1000f * Time.Delta;
+			finalVelocity *= 0.1f;
 		}
 
 		wishDir = finalVelocity;
 
+		playerController.Velocity += fallVelocity;
+
 		playerController.Accelerate( finalVelocity );
-		playerController.Move();
+		
+	}
+
+	private bool IsPlayerOnSpaceBody()
+	{
+		SceneTraceResult trace = Scene.Trace
+			.Ray( Transform.Position, spaceBody.Transform.Position )
+			.Run();
+
+		return trace.Distance < 20f;
+	}
+
+	private void RotateToSpaceBody()
+	{
+		if ( spaceBody == null ) return;
+
+		Vector3 dir = SVector3.FindDirectionOfVectors( Transform.Position, spaceBody.Transform.Position );
+
+		Vector3 lookUp = Transform.Rotation.Up;
+
+		Vector3 backward = -Transform.Rotation.Up;
+		Vector3 forward = dir;
+
+		float dot = Vector3.Dot( backward, forward );
+
+		Vector3 cross = Vector3.Cross( backward, forward );
+		float angle = (float)Math.Atan2( cross.Length, dot );
+
+		Vector3 axis;
+		if ( cross.Length > 0 )
+		{
+			axis = cross.Normal;
+		}
+		else
+		{
+			axis = Vector3.Cross( backward, lookUp ).Normal;
+		}
+
+		float w = (float)Math.Cos( angle / 2f );
+		float x = axis.x * (float)Math.Sin( angle / 2f );
+		float y = axis.y * (float)Math.Sin( angle / 2f );
+		float z = axis.z * (float)Math.Sin( angle / 2f );
+
+		Rotation rotation = new Rotation( x, y, z, w ) * Transform.Rotation;
+
+		Transform.Rotation = Rotation.Slerp( Transform.Rotation, rotation, Time.Delta * 50f );
 	}
 
 	private void CameraRotation()
@@ -119,7 +175,7 @@ public sealed class Player : Component
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
 		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
-		animationHelper.IsGrounded = playerController.IsOnGround;
+		animationHelper.IsGrounded = playerController.IsOnGround || IsPlayerOnSpaceBody();
 	}
 
 	private void RotateBody()

@@ -27,7 +27,7 @@
     {
       "Id": "bfc59c12-1ed2-4f91-8956-a95a315eac3c",
       "Name": "Sun",
-      "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+      "Rotation": "0.000000000000003727313,-0.00000008527098,1,-0.00000004371139",
       "Tags": "light_directional,light",
       "Enabled": true,
       "Components": [
@@ -37,7 +37,23 @@
           "FogStrength": 1,
           "LightColor": "0.94419,0.97767,1,1",
           "Shadows": true,
-          "SkyColor": "0.2532,0.32006,0.35349,1"
+          "SkyColor": "0.02326,0.02326,0.02326,1"
+        }
+      ],
+      "Children": [
+        {
+          "Id": "fdd9cfba-ab33-4030-ace9-53b660177316",
+          "Name": "2D Skybox",
+          "Position": "-2736.175,197.3717,404.9484",
+          "Tags": "skybox",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkyBox2D",
+              "SkyMaterial": "materials/skybox/light_test_sky_sunny02.vmat",
+              "Tint": "1,1,1,1"
+            }
+          ]
         }
       ]
     },
@@ -49,7 +65,7 @@
       "Components": [
         {
           "__type": "SkyBox2D",
-          "SkyMaterial": "materials/skybox/light_test_sky_sunny03.vmat",
+          "SkyMaterial": "textures/skybox/spacegame_star_skybox.vmat",
           "Tint": "1,1,1,1"
         },
         {
@@ -60,7 +76,7 @@
           },
           "Feathering": 0.02,
           "Projection": "Sphere",
-          "Texture": "textures/cubemaps/default2.vtex",
+          "Texture": "textures/skybox/image_png_4e28ec63.generated.vtex",
           "TintColor": "1,1,1,1"
         }
       ]
@@ -68,23 +84,56 @@
     {
       "Id": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6",
       "Name": "SpawnPoint (1)",
+      "Position": "1275.083,0,0",
       "Scale": "0.5632889,0.5632889,0.5632889",
       "Enabled": true
     },
     {
-      "Id": "4fd6256c-9e8b-4326-9304-b9b1f2d1d42d",
+      "Id": "f49ee7ed-32b2-4edf-84f3-1880a2917a65",
       "Name": "Object",
+      "Position": "-992.9441,2077.008,735.2629",
       "Enabled": true,
       "Components": [
         {
-          "__type": "MapInstance",
-          "MapName": "spacegame_arena",
-          "OnMapLoaded": null,
-          "OnMapUnloaded": null,
-          "UseMapFromLaunch": false
+          "__type": "SkinnedModelRenderer",
+          "AnimationGraph": null,
+          "BodyGroups": 341,
+          "BoneMergeTarget": null,
+          "CreateBoneObjects": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/citizen/citizen.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
         }
-      ],
-      "Children": []
+      ]
+    },
+    {
+      "Id": "72f54538-d511-4036-bc47-2c1369beba45",
+      "Name": "spacebody",
+      "Rotation": "0,0.7071068,0,0.7071068",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/spacebody.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "ModelCollider",
+          "IsTrigger": false,
+          "Model": "models/spacebody.vmdl",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "SpaceBody"
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -110,6 +159,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-21T09:31:57.0916277\u002B02:00",
+  "LastSaved": "2024-02-22T18:32:21.1179582\u002B02:00",
   "__references": []
 }
