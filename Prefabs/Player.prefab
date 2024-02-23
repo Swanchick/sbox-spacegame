@@ -1,34 +1,28 @@
 {
   "RootObject": {
-    "Id": "a752295c-a579-4f44-9a6d-0aebd75bcc9a",
+    "Id": "6cddeca4-92a0-4808-89eb-a8597785ee52",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
     "Components": [
       {
-        "__type": "CharacterController",
-        "Acceleration": 10,
-        "Bounciness": 0.3,
-        "GroundAngle": 45,
-        "Height": 71.25,
-        "IgnoreLayers": "",
-        "Radius": 7.18,
-        "StepHeight": 18
-      },
-      {
         "__type": "Player",
         "playerBody": {
           "_type": "gameobject",
-          "go": "6200ced7-85f6-4f65-a6de-710456128173"
+          "go": "c2561fbb-7696-4747-acda-9c71fb73eeea"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "b5aecb63-46fa-478b-8e18-1cbd0b5e17df",
+          "go": "d9e3b148-ed88-4e32-8ae9-cb4f46d13d66",
           "component_type": "CameraComponent"
         },
         "playerHead": {
           "_type": "gameobject",
-          "go": "f048625e-00f3-453d-8174-60a6c71cb28d"
+          "go": "6440a8c1-a0c6-47a0-9e6b-f2052608136a"
+        },
+        "playerNeck": {
+          "_type": "gameobject",
+          "go": "09c05af0-fa3f-4326-a846-987dfabbfb7d"
         },
         "airFriction": 0.1,
         "cameraSensetivity": 0.1,
@@ -50,14 +44,24 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "6200ced7-85f6-4f65-a6de-710456128173",
+          "go": "c2561fbb-7696-4747-acda-9c71fb73eeea",
           "component_type": "SkinnedModelRenderer"
         }
+      },
+      {
+        "__type": "CharacterController",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 71.89,
+        "IgnoreLayers": "",
+        "Radius": 8.11,
+        "StepHeight": 18
       }
     ],
     "Children": [
       {
-        "Id": "6200ced7-85f6-4f65-a6de-710456128173",
+        "Id": "c2561fbb-7696-4747-acda-9c71fb73eeea",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [
@@ -76,33 +80,41 @@
         ]
       },
       {
-        "Id": "f048625e-00f3-453d-8174-60a6c71cb28d",
-        "Name": "PlayerHead",
-        "Position": "0,0,62.78072",
+        "Id": "09c05af0-fa3f-4326-a846-987dfabbfb7d",
+        "Name": "PlayerNeck",
+        "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "b5aecb63-46fa-478b-8e18-1cbd0b5e17df",
-            "Name": "Camera",
+            "Id": "6440a8c1-a0c6-47a0-9e6b-f2052608136a",
+            "Name": "PlayerHead",
             "Position": "0,0,0",
-            "Tags": "maincamera",
             "Enabled": true,
-            "Components": [
+            "Children": [
               {
-                "__type": "CameraComponent",
-                "BackgroundColor": "0.33333,0.46275,0.52157,1",
-                "ClearFlags": "All",
-                "FieldOfView": 110,
-                "IsMainCamera": true,
-                "Orthographic": false,
-                "OrthographicHeight": 1204,
-                "Priority": 1,
-                "RenderExcludeTags": "",
-                "RenderTags": "",
-                "TargetEye": "None",
-                "Viewport": "0,0,1,1",
-                "ZFar": 10000,
-                "ZNear": 1
+                "Id": "d9e3b148-ed88-4e32-8ae9-cb4f46d13d66",
+                "Name": "Camera",
+                "Position": "0,0,0",
+                "Tags": "maincamera",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "CameraComponent",
+                    "BackgroundColor": "0.33333,0.46275,0.52157,1",
+                    "ClearFlags": "All",
+                    "FieldOfView": 110,
+                    "IsMainCamera": true,
+                    "Orthographic": false,
+                    "OrthographicHeight": 1204,
+                    "Priority": 1,
+                    "RenderExcludeTags": "",
+                    "RenderTags": "",
+                    "TargetEye": "None",
+                    "Viewport": "0,0,1,1",
+                    "ZFar": 10000,
+                    "ZNear": 1
+                  }
+                ]
               }
             ]
           }

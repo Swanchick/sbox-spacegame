@@ -84,14 +84,14 @@
     {
       "Id": "a6e7842c-7c04-4011-9d65-a5f05d87c2d6",
       "Name": "SpawnPoint (1)",
-      "Position": "1275.083,0,0",
+      "Position": "47.67114,-0.00007315946,1000.579",
       "Scale": "0.5632889,0.5632889,0.5632889",
       "Enabled": true
     },
     {
       "Id": "f49ee7ed-32b2-4edf-84f3-1880a2917a65",
       "Name": "Object",
-      "Position": "-992.9441,2077.008,735.2629",
+      "Position": "9.840546,85.0436,1013.016",
       "Enabled": true,
       "Components": [
         {
@@ -109,26 +109,19 @@
       ]
     },
     {
-      "Id": "72f54538-d511-4036-bc47-2c1369beba45",
+      "Id": "5184bc39-8b82-4f49-938d-291cac2d5057",
       "Name": "spacebody",
       "Rotation": "0,0.7071068,0,0.7071068",
       "Enabled": true,
       "Components": [
         {
-          "__type": "ModelRenderer",
-          "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
+          "__type": "Prop",
+          "Health": 0,
+          "IsStatic": true,
           "Model": "models/spacebody.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "ModelCollider",
-          "IsTrigger": false,
-          "Model": "models/spacebody.vmdl",
-          "Static": false,
-          "Surface": null
+          "OnPropBreak": null,
+          "OnPropTakeDamage": null,
+          "ShowCreatedComponents": false
         },
         {
           "__type": "SpaceBody"
@@ -159,6 +152,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-22T18:32:21.1179582\u002B02:00",
+  "LastSaved": "2024-02-22T23:56:27.0388142\u002B02:00",
   "__references": []
 }
